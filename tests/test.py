@@ -2,7 +2,6 @@ import numpy as np
 import linmix
 from astropy.table import Table
 
-
 def generate_test_data():
     alpha = 4.0
     beta = 3.0
@@ -37,20 +36,20 @@ def generate_test_data():
     ascii.write(out, 'test.dat')
 
 
-def run():
-    import astropy.io.ascii as ascii
-    try:
-        a = ascii.read('test.dat')
-    except:
-        generate_test_data()
-        a = ascii.read('test.dat')
+# def run():
+import astropy.io.ascii as ascii
+try:
+    a = ascii.read('test.dat')
+except:
+    generate_test_data()
+    a = ascii.read('test.dat')
 
-    lm = linmix.LinMix(a['x'], a['y'], a['xsig'], a['ysig'], delta=a['delta'])
-    lm.run_mcmc()
-    ascii.write(lm.chain[['alpha', 'beta', 'sigsqr',
-                          'mu0', 'usqr', 'wsqr',
-                          'ximean', 'xisig', 'corr']],
-                'test.pyout')
+lm = linmix.LinMix(a['x'], a['y'], a['xsig'], a['ysig'], delta=a['delta'])
+lm.run_mcmc()
+ascii.write(lm.chain[['alpha', 'beta', 'sigsqr',
+                      'mu0', 'usqr', 'wsqr',
+                      'ximean', 'xisig', 'corr']], 'test.pyout')
 
-if __name__ == '__main__':
-    run()
+
+# if __name__ == '__main__':
+#     run()
